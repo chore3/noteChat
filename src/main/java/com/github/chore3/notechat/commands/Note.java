@@ -1,5 +1,6 @@
 package com.github.chore3.notechat.commands;
 
+
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -27,5 +28,10 @@ public class Note {
                 }
             );
 
+        note.then(info.then(message))
+                .then(warn.then(message))
+                .then(alert.then(message));
+
+        dispatcher.register(note);
     }
 }

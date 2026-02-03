@@ -30,5 +30,6 @@ public class Notechat {
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         LOGGER.info("HELLO from server starting");
+        Note.register(event.getServer().getCommands().getDispatcher());
     }
 }
