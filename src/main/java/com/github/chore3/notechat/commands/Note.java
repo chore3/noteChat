@@ -2,10 +2,13 @@ package com.github.chore3.notechat.commands;
 
 
 import com.mojang.brigadier.CommandDispatcher;
+import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.commands.arguments.MessageArgument;
-import net.minecraft.network.chat.ChatType;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
 
 public class Note {
@@ -17,16 +20,20 @@ public class Note {
         var warn = Commands.literal("warn");
         var alert = Commands.literal("alert");
 
-        var message = Commands.argument("message", MessageArgument.message())
-                .executes(context -> {
-                    MessageArgument.resolveChatMessage(context, "message", (resolvedMessage) -> {
-                        CommandSourceStack commandsourcestack = context.getSource();
-                        PlayerList playerlist = commandsourcestack.getServer().getPlayerList();
-                        playerlist.broadcastChatMessage(resolvedMessage, commandsourcestack, ChatType.bind(ChatType.SAY_COMMAND, commandsourcestack));
-                    });
-                    return 1;
-                }
-            );
+        var message = Commands.argument("message", StringArgumentType.greedyString()).executes((context) -> {
+            CommandSourceStack commandsourcestack = context.getSource();
+            PlayerList playerlist = commandsourcestack.getServer().getPlayerList();
+            MutableComponent component = Component.empty()
+                    .append(Component.literal("[警告] ").withStyle(ChatFormatting.RED))
+                    .append(Component.literal("デスワームに騎乗しないでください").withStyle(ChatFormatting.GOLD));
+
+            int i = 0;
+            for(ServerPlayer serverplayer : playerlist.getPlayers()) {
+                serverplayer.sendSystemMessage(component, false);
+            }
+
+            return i;
+        });
 
         note.then(info.then(message))
                 .then(warn.then(message))
