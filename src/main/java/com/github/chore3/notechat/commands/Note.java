@@ -10,9 +10,8 @@ import net.minecraft.server.players.PlayerList;
 public class Note {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         var note = Commands.literal("note")
-                .requires((CommandSourceStack source) -> source.hasPermission(2)
-            );
-
+                .requires((CommandSourceStack source) -> source.hasPermission(2));
+        
         var info = Commands.literal("info");
         var warn = Commands.literal("warn");
         var alert = Commands.literal("alert");
@@ -27,5 +26,6 @@ public class Note {
                     return 1;
                 }
             );
+
     }
 }
