@@ -15,7 +15,7 @@ public class Note {
     enum NoteType {
         INFO("ℹ Info", ChatFormatting.AQUA),
         WARN("⚠ Warn", ChatFormatting.GOLD),
-        ALERT("‼ Alert", ChatFormatting.RED);
+        ALERT("❎ Alert", ChatFormatting.RED);
 
         final String title;
         final ChatFormatting color;
