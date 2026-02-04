@@ -1,6 +1,5 @@
 package com.github.chore3.notechat.commands;
 
-
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
@@ -23,9 +22,12 @@ public class Note {
         var message = Commands.argument("message", StringArgumentType.greedyString()).executes((context) -> {
             CommandSourceStack commandsourcestack = context.getSource();
             PlayerList playerlist = commandsourcestack.getServer().getPlayerList();
+            String strMsg = StringArgumentType.getString(context, "message");
             MutableComponent component = Component.empty()
-                    .append(Component.literal("[警告] ").withStyle(ChatFormatting.RED))
-                    .append(Component.literal("デスワームに騎乗しないでください").withStyle(ChatFormatting.GOLD));
+                    .append(Component.literal("--------------------\n").withStyle(ChatFormatting.GRAY))
+                    .append(Component.literal("ℹ Info\n").withStyle(ChatFormatting.AQUA))
+                    .append(Component.literal(strMsg + "\n").withStyle(ChatFormatting.LIGHT_PURPLE))
+                    .append(Component.literal("--------------------").withStyle(ChatFormatting.GRAY));
 
             int i = 0;
             for(ServerPlayer serverplayer : playerlist.getPlayers()) {
