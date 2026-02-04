@@ -46,13 +46,16 @@ public class Note {
         var note = Commands.literal("note")
                 .requires((CommandSourceStack source) -> source.hasPermission(2));
 
-        var messageInfo = Commands.argument("message", StringArgumentType.greedyString())
-                .executes(ctx -> sendNote(ctx, NoteType.INFO));
-        var messageWarn = Commands.argument("message", StringArgumentType.greedyString())
-                .executes(ctx -> sendNote(ctx, NoteType.WARN));
-        var messageAlert = Commands.argument("message", StringArgumentType.greedyString())
-                .executes(ctx -> sendNote(ctx, NoteType.ALERT));
+        var messageInfo = Commands.literal("info").then(Commands.argument("message", StringArgumentType.greedyString())
+                .executes(ctx -> sendNote(ctx, NoteType.INFO)));
+        var messageWarn = Commands.literal("warn").then(Commands.argument("message", StringArgumentType.greedyString())
+                .executes(ctx -> sendNote(ctx, NoteType.WARN)));
+        var messageAlert = Commands.literal("alert").then(Commands.argument("message", StringArgumentType.greedyString())
+                .executes(ctx -> sendNote(ctx, NoteType.ALERT)));
 
+        note.then(messageInfo)
+            .then(messageWarn)
+            .then(messageAlert);
         dispatcher.register(note);
     }
 }
