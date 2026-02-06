@@ -40,7 +40,7 @@ public class Note {
     private static void playSound(ServerPlayer player, float pitch, ResourceLocation sound, long seed) {
         SoundSource soundSource = SoundSource.MASTER;
         Holder<SoundEvent> holder = Holder.direct(SoundEvent.createVariableRangeEvent(sound));
-        player.connection.send(new ClientboundSoundPacket(holder, soundSource, player.getX(), player.getX(), player.getX(), 1.0F, pitch, seed));
+        player.connection.send(new ClientboundSoundPacket(holder, soundSource, player.getX(), player.getY(), player.getZ(), 1.0F, pitch, seed));
     }
 
     private static int sendNote(CommandContext<CommandSourceStack> context, NoteType type) {
