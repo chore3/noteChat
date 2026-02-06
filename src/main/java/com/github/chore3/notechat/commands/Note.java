@@ -18,8 +18,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 
 public class Note {
-    private static final SimpleCommandExceptionType ERROR_TOO_FAR = new SimpleCommandExceptionType(Component.translatable("commands.playsound.failed"));
-
     @SuppressWarnings("removal")
     enum NoteType {
         INFO("ℹ Info", ChatFormatting.AQUA, "minecraft:block.note_block.bit", 1.0F),
